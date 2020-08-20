@@ -5,8 +5,6 @@
 body{
   width:100vw;
   height: 100vh;
-  background-color:rgb(177, 102, 102);
-  
 }
 #container{
   font:10px;
@@ -14,6 +12,7 @@ body{
   height: 100vh;
   margin-left: auto;
   margin-right: auto;
+  padding: 0.2rem;
   background-color:rgb(211,211,211);
   
 }
@@ -21,6 +20,8 @@ body{
   width:100%;
   height:auto;
   margin-top:0.5rem;
+  display: flex;
+  justify-content: center;
   background-color:rgb(211,211,211);
   color:black;
   font-style: monospace;
@@ -60,13 +61,20 @@ body{
   color:gray;
 }
 #search{
-  width: 45%;
-  height:2rem;
+  width: 75%;
+  height:auto;
+  padding-top: 0.2rem;
   color:rgb(59, 56, 56);
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-#txtSearch{
+.txtSearch{
   color:black;
+  height:2rem;
+}
+.txtSelect{
+  color:black;
+  height:2rem;
+  width:15rem;
 }
