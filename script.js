@@ -1,5 +1,6 @@
 //You can edit ALL of the code here
 //Global Variable
+let load=false;
 const allEpisodes = getAllEpisodes();
 const rootElem = document.getElementById("root-grid");
 const container=document.getElementById("container");
@@ -78,7 +79,7 @@ function search(txtSearch,matchItem){
 }
 //**********automatically display content by default
 //******************function display episode */
-function display(name,img,summary,season,number){
+function display(name,img,summary,season,number,load){
        //create html elements;
        episodeContainer=document.createElement("div");
       // searchContainer=document.createElement("div");
@@ -104,10 +105,13 @@ function display(name,img,summary,season,number){
        episodeContainer.appendChild(image);
        episodeContainer.appendChild(description);
        rootElem.appendChild(episodeContainer);
-       //add all episode into select
-       var option = document.createElement('option');
+       //add all episode into select.it work only on load tiem
+       if(load===true){
+        var option = document.createElement('option');
         option.text = option.value = episodeCodeNumber+"-"+name;
         txtSelect.add(option);
+        load=false;
+       }
 }
 //*******************search the episode */
 txtSearch.addEventListener("keyup",function(){
@@ -156,12 +160,13 @@ txtSelect.addEventListener("change",function(e){
 });
 
 function makePageForEpisodes(episodeList) {
-
+  //load is used to restricted the putting elements in select input one time
+  load=true;
  //by default setting of grid.all episode display
   match.textContent="Displaying "+allEpisodes.length+"/"+allEpisodes.length+" Episodes";
   for(i=0;i<episodeList.length;i++){  //create html elements;
     display(episodeList[i].name,episodeList[i].image.medium,episodeList[i].summary,
-    episodeList[i].season,episodeList[i].number);
+    episodeList[i].season,episodeList[i].number,load);
   }
 }
 //*************load event */
