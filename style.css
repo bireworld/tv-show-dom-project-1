@@ -61,7 +61,7 @@ body{
   color:gray;
 }
 #search{
-  width: 75%;
+  width: 100%;
   height:auto;
   padding-top: 0.2rem;
   color:rgb(59, 56, 56);
@@ -71,11 +71,17 @@ body{
 }
 .txtSearch{
   color:black;
-  height:2rem;
+  height:1.5rem;
 }
 .txtSelect{
   color:black;
   height:2rem;
   width:15rem;
+  background-color: rgb(211,211,211);
+}
+.txtShow{
+  color:black;
+  height:2rem;
+  width:14rem;
   background-color: rgb(211,211,211);
 }

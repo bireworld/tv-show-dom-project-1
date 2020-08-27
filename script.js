@@ -1,18 +1,19 @@
-
+let show=getAllShows();
 let load=false;
-let url="https://api.tvmaze.com/shows/82/episodes";
-let total;
 let List=[];
 const rootElem = document.getElementById("root-grid");
 const container=document.getElementById("container");
 const searchCont=document.getElementById("search");
 let txtSelect=document.createElement("select");
+let txtShow=document.createElement("select");
 let txtSearch=document.createElement("input");
 let match=document.createElement("spam");
 let btnBack=document.createElement("button");
 txtSearch.setAttribute("type","text");
 txtSearch.classList.add("txtSearch");
 txtSelect.classList.add("txtSelect");
+txtShow.classList.add("txtShow");
+searchCont.appendChild(txtShow);
 searchCont.appendChild(txtSelect);
 searchCont.appendChild(txtSearch);
 searchCont.appendChild(match);
@@ -120,15 +121,44 @@ txtSearch.addEventListener("keyup",function(){
 //********************back to all episode */
 btnBack.addEventListener("click",function(){
   rootElem.innerHTML="";
-  searchCont.setAttribute("style","width:75%")
+  searchCont.setAttribute("style","width:100%")
    makePageForEpisodes(List);
   btnBack.remove();
   searchCont.appendChild(txtSearch);
   searchCont.appendChild(match);
 });
+//**********************select the show */
+txtShow.addEventListener("change",function(e){
+//  let  url=`https://api.tvmaze.com/shows/${show[0].id}/episodes`;
+  btnBack.remove();
+  txtSelect.innerHTML="";
+  rootElem.innerHTML="";
+  load=true;
+  let  url;
+  for(obj of show){
+    if(obj.name===txtShow.value){
+      url=`https://api.tvmaze.com/shows/${obj.id}/episodes`;
+    }
+  }
+      fetch(url).then(function response(res){
+        return res.json();
+      })
+      .then(function data(d){
+        List=d;
+        match.textContent="Displaying:"+List.length+"/"+List.length+" Episodes";
+
+        for(let i=0;i<d.length;i++){
+        display(d[i].name,d[i].image.medium,d[i].summary,
+          d[i].season,d[i].number,load);
+        }
+       });
+      
+   
+})
 //*******************select the episodes */
 txtSelect.addEventListener("change",function(e){
     let epName=txtSelect.value.slice(7);
+    let cnt=1;
     for(let obj of List){
       if(obj.name===epName){
        txtSearch.value="";
@@ -136,18 +166,18 @@ txtSelect.addEventListener("change",function(e){
         rootElem.innerHTML="";
         display(obj.name,obj.image.medium,obj.summary,
         obj.season,obj.number);
-        match.textContent="Displaying:"+obj.number+"/"+List.length+" Episodes";
+        match.textContent="Displaying:"+cnt+"/"+List.length+" Episodes";
         btnBack.textContent="<<";
         btnBack.setAttribute("style","width:5rem;height:3rem;font-weight:bold")
         searchCont.appendChild(btnBack);
         displayOne(32,20,1);
       }
+      cnt++;
     }
  });
 //display the episodes at the loading time
 function makePageForEpisodes(episodeList) {
 load=true;
- List=episodeList;
   match.textContent="Displaying "+episodeList.length+"/"+episodeList.length+" Episodes";
   for(i=0;i<episodeList.length;i++){  //create html elements;
     display(episodeList[i].name,episodeList[i].image.medium,episodeList[i].summary,
@@ -156,14 +186,34 @@ load=true;
 }
 //*******************8loading time function
 function setup() {
-    url="https://api.tvmaze.com/shows/82/episodes";
+  ///////////////////
+  //http://www.tvmaze.com/shows/82/game-of-thrones
+  //id,name
+ console.log(show[0].name);
+  for(let obj of show){
+    let option=document.createElement("option");
+    option.text=option.value=obj.name;
+    txtShow.add(option);
+  }
+   let  url=`https://api.tvmaze.com/shows/${show[0].id}/episodes`;
+
+  // fetch(url).
+  //  then(function(response){
+  //   return response.json();
+  //  }).then(function(data){
+  //    for(let obj of data){
+  //     console.log(obj.name);
+  //    }
+   
+  //  });
+  ////////////////////////////////
+   //let url="https://api.tvmaze.com/shows/82/episodes";
     fetch(url).then(function response(res){
-    
       return res.json();
     })
     .then(function data(d){
-        let allEpisodes=d;
-        makePageForEpisodes(allEpisodes);
+      List=d;
+        makePageForEpisodes(List);
      });
 }
 
