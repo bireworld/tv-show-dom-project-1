@@ -268,7 +268,9 @@ function setup(id) {
       List=d;
       //call a function to display episodes on screen
         makePageForEpisodes(List);
-     });
+     }).then(function(error){
+       console.log(error);
+     })
 }
   
 //*************load event */

@@ -21,20 +21,113 @@ let foundShowList=[];
     foundShow.id="foundShow";
     showSelected.id="showSelected";
     showSearch.classList.add("showSearch");
+    btnShowCast=document.createElement("button");
+    btnShowCast.id="btnShowCast";
+    btnShowCast.textContent="Cast";
+    btnShowCast.setAttribute("style","width:5rem");
+    showCastContainer=document.createElement("div");
+    showCastContainer.classList.add("showCastContainer");
+    btnBackToShow=document.createElement("button");
+    btnBackToShow.id="btnBackToShow";
+    btnBackToShow.textContent="Home";
     showSearch.appendChild(home);
     showSearch.appendChild(filtering);
     showSearch.appendChild(txtFiltering);
     showSearch.appendChild(foundShow);
     showSearch.appendChild(showSelected);
+    showSearch.appendChild(btnShowCast);
+    showSearch.appendChild(btnBackToShow);
     showContainer.appendChild(showSearch);
     showContainer.appendChild(showBoundary);
-///////////
+    showContainer.appendChild(showCastContainer);
+
     let btnHome=document.createElement("button");
     btnHome.id="searchCont"
 //btnHome.classList.add("search");
     btnHome.textContent="Home";
-//let showDiv=document.getElementById("show");
+//back to home from cast page
+btnBackToShow.addEventListener("click",function(){
+    showCastContainer.style.display="none";
+    showBoundary.style.display="block";
+    txtFiltering.style.display="block";
+    showSelected.style.display="block";
+    filtering.style.display="block";
+    home.style.display="block";
+    foundShow.style.display="block";
+})
+//********************show the casts of show
 
+function showCast(arr){
+    showCastImg=document.createElement("div");
+    showCastImg.classList.add("showCastImg");
+    img=document.createElement("img");
+    img.src=arr.person.image.medium;
+    showCastName=document.createElement("p");
+    showCastName.textContent=arr.person.name;
+    showCastImg.appendChild(showCastName);
+    showCastImg.appendChild(img);
+    showCastContainer.appendChild(showCastImg);
+    showCastImg.addEventListener("click",function(e){
+        //http://api.tvmaze.com/people/1/castcredits
+        console.log( showCastName.textContent)
+    });
+}
+btnShowCast.addEventListener("click",function(){
+    console.log("x")
+    txtFiltering.style.display="none";
+    showSelected.style.display="none";
+    filtering.style.display="none";
+    home.style.display="none";
+    foundShow.style.display="none";
+    showCastContainer.innerHTML="";
+    showBoundary.style.display="none";
+    showCastContainer.style.display="block";
+    //all shows casts
+    if(showSelected.length===0){
+        for(let j=0;j<show.length;j++){
+            let url=`http://api.tvmaze.com/shows/${show[j].id}?embed=cast`;
+            fetch(url).then(function(response){
+                return response.json();
+            }).then(function(content){
+                //console.log(content._embedded);
+                if(content._embedded.cast.length>0){
+                    for(let i=0;i<content._embedded.cast.length;i++){
+                        showCast(content._embedded.cast[i]);
+                        console.log(content);
+                    }
+                }
+            }).catch(function(error){
+                console.log(error);
+            });
+        }
+    }else{//only selected show casts
+       // alert(showSelected[4].index);
+       let showId=[];
+       for(let i=0;i<showSelected.length;i++){
+           showId.push(show.filter(function(objSelected){
+                return objSelected.name.includes(showSelected[i].value);
+           }));
+           
+       }
+       for(let i=0;i<showId.length;i++){
+        url=`http://api.tvmaze.com/shows/${showId[i][0].id}?embed=cast`;
+        console.log(url)
+        fetch(url).then(function(response){
+            return response.json();
+        }).then(function(content){
+            if(content._embedded.cast.length>0){
+                for(let i=0;i<content._embedded.cast.length;i++){
+                    showCast(content._embedded.cast[i]);
+                    console.log(content);
+                }
+            }
+        }).then(function(error){
+            console.log(error);
+        })
+       }
+       
+    }
+});
 ///////first page display all the shows
 function showList(show){
     
@@ -151,7 +244,7 @@ txtFiltering.addEventListener("keyup",function(){
     }
     
 });
-//on change event of showselected
+//on change event of show selected
 showSelected.addEventListener("change",function(){
     for(obj of show){
         if(obj.name===showSelected.value){
