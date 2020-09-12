@@ -175,7 +175,9 @@ txtShow.addEventListener("change",function(e){
             List[i].season,List[i].number,load);
           }
         }
-       });
+       }).catch(function(error){
+        console.log("error:"+error);
+    });
 });
 ////*******************this event trigger when choose a episodes title*/
 function episodeHeadingClick(episodeLink){
@@ -268,9 +270,9 @@ function setup(id) {
       List=d;
       //call a function to display episodes on screen
         makePageForEpisodes(List);
-     }).then(function(error){
-       console.log(error);
-     })
+     }).catch(function(error){
+      console.log("error:"+error);
+      });
 }
   
 //*************load event */

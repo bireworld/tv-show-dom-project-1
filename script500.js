@@ -97,7 +97,7 @@ btnShowCast.addEventListener("click",function(){
                     }
                 }
             }).catch(function(error){
-                console.log(error);
+                console.log("error:"+error);
             });
         }
     }else{//only selected show casts
@@ -121,9 +121,9 @@ btnShowCast.addEventListener("click",function(){
                     console.log(content);
                 }
             }
-        }).then(function(error){
-            console.log(error);
-        })
+        }).catch(function(error){
+            console.log("error:"+error);
+        });
        }
        
     }
