@@ -114,4 +114,28 @@
     width:5rem;
     height: 2rem;
 }
+.showCastDetail{
+    height: auto;
+    width: 100%;
+ text-align: center;
 
+}
+.showCastDetail1{
+   
+    height: auto;
+    width: 100%;
+    margin-top: 0.5rem;
+    display:flex;
+    flex-direction: column;
+    box-shadow:  0 0 1rem  #9ea5a5;
+    border-radius: 0.5rem;
+}
+.cast{
+    width:100%;
+    display:flex;
+    justify-content: space-around;
+    border: 0.1rem solid red;
+}
+.castDetail{
+    text-align: justify;
+}

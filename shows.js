@@ -6,6 +6,7 @@
 function getOneShow() {
   return {
     id: 82,
+    //http://api.tvmaze.com/shows/82/
     url: "http://www.tvmaze.com/shows/82/game-of-thrones",
     name: "Game of Thrones",
     type: "Scripted",
@@ -358,7 +359,8 @@ function getAllShows() {
       },
       "weight": 95,
       "network": {
-        "id": 4,
+        
+        
         "name": "FOX",
         "country": {
           "name": "United States",

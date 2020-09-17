@@ -54,8 +54,8 @@ body{
   cursor: pointer;
 }
 .episode-img{
-  width:80%;
-  height:6rem;
+  /* width:80%;
+  height:6rem; */
   margin-top:1rem;
 }
 .episode-description{

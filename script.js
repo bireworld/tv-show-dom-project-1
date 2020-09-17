@@ -233,7 +233,6 @@ txtSelect.addEventListener("change",function(e){
  });
 //put the episodes entries in div rooElem at the loading time
 function makePageForEpisodes(episodeList) {
- 
   load=true;//restrict load txtSelect input one time
   match.textContent="Displaying "+episodeList.length+"/"+episodeList.length+" Episodes";
   //calling display() to put entries on rootElem and load txtSelect
